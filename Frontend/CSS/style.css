@@ -3,33 +3,80 @@
     padding: 0;
     border: 0;
 }
-.navbar{
-    background-color: #e0f7fa; 
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    color: white;
+    transition: transform 0.3s ease;
 }
-.addupdate{
-    margin: 0 10%;
+
+.sidebar .list-group-item {
+    background-color: #343a40;
+    color: white;
+    border: none;
 }
-.navbar-brand { 
-    margin-left: 20px; color: rgb(85, 193, 229) !important; 
-} 
-.navbar-nav { 
-    flex-grow: 1; justify-content: center; 
-} 
-.nav-item { 
-    margin-right: 20px; 
-} 
-.nav-item .nav-link:hover{
-    color:rgb(85, 193, 229) ;
+
+.sidebar .list-group-item:hover {
+    background-color: #495057;
 }
-.form-inline { 
-    display: flex; 
-    justify-content: flex-end; 
-    gap: 10px; 
-} 
-.btn-outline-danger { 
-    margin-left: 10px; 
-    margin-right: 20px;
+
+.sidebar-heading {
+    background-color: #495057;
+    font-family: 'Cursive', sans-serif; /* Styled font for logo */
 }
-.dashboard{
-    color:rgb(85, 193, 229) ;
+
+.navbar {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar-toggler {
+    display: none;
+}
+
+.cancel-button {
+    display: none;
+}
+.main {
+    position: absolute;
+    left: 270px;
+    top:100px;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        transform: translateX(-250px); /* Hide sidebar on small screens */
+    }
+
+    .sidebar.toggled {
+        transform: translateX(0); /* Show sidebar when toggled */
+    }
+
+    .navbar {
+        margin-left: 0;
+    }
+
+    .sidebar-toggler {
+        display: block;
+    }
+
+    .cancel-button {
+        display: block;
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .sidebar .d-flex {
+        display: flex;
+        padding: 10px;
+    }
 }
