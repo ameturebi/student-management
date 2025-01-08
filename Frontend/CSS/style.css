@@ -29,10 +29,7 @@
     font-family: 'Cursive', sans-serif; /* Styled font for logo */
 }
 
-.navbar {
-    margin-left: 250px;
-    transition: margin-left 0.3s ease;
-}
+
 
 .sidebar-toggler {
     display: none;
@@ -74,4 +71,188 @@
         display: flex;
         padding: 10px;
     }
+}
+.navbar-brand {
+    margin-left: 20px;
+    color: green !important;
+}
+.navbar {
+    background-color: #e9ecef; /* Adjust to your preferred background color */
+}
+.form-inline {
+    display: flex;
+    gap: 10px; /* Add gap between search and logout button */
+}
+.navbar-nav {
+    justify-content:center;
+    width: 100%;
+}
+.navbar-nav li a:hover{
+    color:green ;
+}
+.navbar-toggler {
+    margin-right: 20px;
+}
+.form-inline button{
+    margin-right: 20px;
+}
+.student{
+    color: green;
+}
+ /* //Table Style// */
+.table {
+    width: 80%;
+    margin: 20px 10%;
+}
+
+.table thead th { 
+    background-color: #6394c5; 
+    color: white; 
+    text-align: center; 
+} 
+/* .table tbody tr:nth-child(even) {
+    background-color:#0c2136; 
+} 
+.table tbody tr:hover { 
+    background-color: #6394c5; 
+}  */
+.table tbody td { 
+    text-align: center; 
+}
+
+
+
+/* modal style */
+.mod {
+    display: flex;
+    justify-content: flex-end; /* Align the button to the right */
+}
+
+  /* Button styling */
+.mod button {
+    background-color: rgb(49, 133, 49);
+    color: white;
+    padding: 5px 5px;
+    margin: 2% 5% 0 0;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.section h2{
+    color: green;
+    text-align: center;
+}
+/* Modal Background */
+.modal {
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+    padding-top: 10%; /* Center the modal vertically */
+}
+
+/* Modal Dialog */
+.modal-dialog {
+    max-width: 500px; /* Set a max width for the modal */
+    margin: 0 auto; /* Center modal horizontally */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff; /* White background for modal content */
+    border-radius: 8px; /* Rounded corners for modal */
+    border: 1px solid #ccc; /* Light gray border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #49a249; /* Dark green background for header */
+    color: #fff; /* White text for the header */
+    padding: 20px; /* Padding around the header content */
+    border-top-left-radius: 8px; /* Rounded top-left corner */
+    border-top-right-radius: 8px; /* Rounded top-right corner */
+}
+
+.modal-header h5 {
+    margin: 0; /* Remove the default margin from the title */
+}
+
+/* Close Button in Header */
+.modal-header .btn-close {
+    background: none; /* Remove the background */
+    border: none; /* Remove the border */
+    color: #fff; /* White close button */
+    font-size: 1.5rem; /* Larger size for close button */
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px; /* Add padding inside the body */
+    font-family: Arial, sans-serif; /* Set font style */
+    color: #333; /* Dark text for readability */
+}
+
+/* Form Fields */
+.modal-body .form-label {
+    font-weight: bold; /* Make labels bold */
+    color: #333; /* Dark text for labels */
+}
+
+.modal-body .form-control {
+    border-radius: 4px; /* Slightly rounded corners for inputs */
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 10px; /* Padding inside input fields */
+    margin-bottom: 15px; /* Add space between input fields */
+}
+
+.modal-body .form-select {
+    border-radius: 4px; /* Rounded corners for select dropdown */
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 10px; /* Padding inside select field */
+    margin-bottom: 15px; /* Space between select and other fields */
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f7f7f7; /* Light gray footer background */
+    padding: 10px 20px; /* Padding around footer content */
+    border-bottom-left-radius: 8px; /* Rounded bottom-left corner */
+    border-bottom-right-radius: 8px; /* Rounded bottom-right corner */
+}
+
+/* Footer Buttons */
+.modal-footer .btn {
+    border-radius: 4px; /* Rounded corners for footer buttons */
+    font-size: 1rem; /* Slightly larger text for footer buttons */
+}
+
+.modal-footer .btn-secondary {
+    background-color: #6c757d; /* Secondary button with gray background */
+    border: none; /* Remove border */
+}
+
+.modal-footer .btn-primary {
+    background-color: #49a249; /* Primary button with dark green background */
+    border: none; /* Remove border */
+}
+
+/* Save Button Hover Effect */
+.modal-footer .btn-primary:hover {
+    background-color: #398739; /* Darker green on hover */
+}
+
+/* Close Button Hover Effect */
+.modal-footer .btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}
+
+
+/* Style for the alert messages */
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
 }

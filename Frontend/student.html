@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="./CSS/style.css">
+    
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <a class="navbar-brand" href="#">Student Management System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ">
+            <li class="nav-item ">
+                <a class="nav-link  " href="./index.html">Dashboard</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link student " href="./student.html">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Attendance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Payment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Report</a>
+            </li>
+        </ul>
+        <form id="form" class="form-inline ms-auto" action="/search" method="get">
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Search" 
+                aria-label="Search" 
+                name="q" 
+                required
+            >
+            <button class="btn btn-outline-danger" type="button">Logout</button>
+        </form>
+    </div>
+</nav>
+</header>
+
+<section class="mod">
+  <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#modalform">
+    <span class="bi bi-plus"></span> Add Student
+  </button>
+  <!-- Modal -->
+  <div class="modal fade" id="modalform" tabindex="-1" aria-labelledby="modalformLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalformLabel">Add New Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="studentForm">
+                    <input type="hidden" id="studentId" name="STUDENT_ID"> <!-- Hidden input for student ID -->
+                    <!-- Student Name -->
+                    <div class="mb-3">
+                        <label for="studentName" class="form-label">Student Name</label>
+                        <input type="text" class="form-control" id="studentName" name="FIRST_NAME" placeholder="Enter Student Name" required>
+                    </div>
+                    <!-- Gender -->
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-select" id="gender" name="GENDER" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <!-- Course -->
+                    <div class="mb-3">
+                        <label for="course" class="form-label">Course</label>
+                        <select class="form-select" id="course" name="CLASS" required>
+                            <option value="FullStack">FullStack</option>
+                            <option value="MobileApp">Mobile App</option>
+                            <option value="Graphics">Graphics Design</option>
+                        </select>
+                    </div>
+                    <!-- Parent Name -->
+                    <div class="mb-3">
+                        <label for="parentName" class="form-label">Parent Name</label>
+                        <input type="text" class="form-control" id="parentName" name="GUARDIAN_NAME" placeholder="Enter Parent's Name" required>
+                    </div>
+                    <!-- Parent Email -->
+                    <div class="mb-3">
+                        <label for="parentEmail" class="form-label">Parent Email</label>
+                        <input type="email" class="form-control" id="parentEmail" name="GUARDIAN_EMAIL" placeholder="Enter Parent's Email" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="studentForm">Save</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+<h2>Full Stack Students</h2>
+  <div class="main">
+        <table class="table table-FullStack " id="data-table">
+          <thead class="">
+            <tr>
+              <th scope="col">Student_Id</th>
+              <th scope="col">Student_Name</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Course</th>
+              <th scope="col">Parent_Name</th>
+              <th scope="col">Parent_Email</th>
+            </tr>
+          </thead>
+          <tbody>
+          
+          </tbody>
+        </table>
+  </div>
+  <h2>Mobile App Students</h2>
+  <div class="main">
+    <table class="table table-MobileApp " id="data-table">
+      <thead class="">
+        <tr>
+          <th scope="col">Student_Id</th>
+          <th scope="col">Student_Name</th>
+          <th scope="col">Gender</th>
+          <th scope="col">Course</th>
+          <th scope="col">Parent_Name</th>
+          <th scope="col">Parent_Email</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+      </tbody>
+    </table>
+</div>
+<h2>Graphic Design Student </h2>
+<div class="main">
+  <table class="table table-Graphics " id="data-table">
+    <thead class="">
+      <tr>
+        <th scope="col">Student_Id</th>
+        <th scope="col">Student_Name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Course</th>
+        <th scope="col">Parent_Name</th>
+        <th scope="col">Parent_Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    </tbody>
+  </table>
+</div>
+</section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
