@@ -90,9 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMessage('Error fetching search results. Please try again.', 'danger');
             });
     });
-    
-    
-
     const form = document.querySelector('#studentForm');
     if (form) {
         form.addEventListener('submit', (event) => {
@@ -170,15 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    
-    
-
-   
-    
-    
-
-    
 
     // Add event listener to the confirm delete button
     const confirmDeleteButton = document.getElementById('confirmDeleteButton');
@@ -308,9 +296,6 @@ const addStudentToTable = (student) => {
         console.error(`Table body not found for class: ${student.CLASS}`);
     }
 };
-
-
-
 // Modal Functionality
 const openModalButton = document.getElementById("openModalButton");
 const closeModalButton = document.getElementById("closeModalButton");
@@ -323,3 +308,8 @@ window.addEventListener("click", (event) => {
         modal.style.display = "none"; // Hide the modal
     }
 });
+
+
+
+
+

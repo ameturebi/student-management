@@ -263,3 +263,28 @@ body{
     max-width: 500px;
     text-align: center;
 }
+
+
+.student-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.student-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-btn {
+    width: 100px;
+    font-weight: bold;
+}
+
+.present {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+.absent {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
