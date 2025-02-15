@@ -21,21 +21,25 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 60000 }
 }));
-const db = mysql.createConnection({ 
-    host: "localhost", 
-    user: "root", 
-    password: "", 
+
+
+const db = mysql.createConnection({
+    host:"localhost",
+    user:"root",
+    password:"",
     database:"SMS"
 })
-db.connect((err,result) => {
-    if (err){
-        console.log(err)
-    }
-    else{
-        console.log('connected')
-    }
-    
+
+db.connect((err) => {
+  if (err) {
+    console.error("Database connection failed:", err);
+    return;
+  }
+  console.log("Connected to the database!");
 });
+
+
+
 const PORT = 2025;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
@@ -101,6 +105,11 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // createTables();
 
+
+//handling login 
+
+
+
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -135,14 +144,19 @@ function isAuthenticated(req, res, next) {
         res.redirect('/');
     }
 }
-app.get('/', (req, res) => {
-    console.log(`${req},${res}`)
-    res.sendFile(path.join(__dirname, 'Frontend', 'login.html'));
-});
 
 app.get('/dashboard', (req, res) => {
+    // res.send("Server is running!");
     res.sendFile(path.join(__dirname, 'Frontend', 'dashboard.html'));
 });
+
+
+app.get('/', (req, res) => {
+    // res.send("Server is running!");
+    res.sendFile(path.join(__dirname, 'Frontend', 'index.html'));
+});
+
+//  get all students
 app.get('/student', (req, res) => {
     let students = `SELECT * FROM STUDENTS  `;
     db.query(students, (err, result) => {
@@ -154,10 +168,10 @@ app.get('/student', (req, res) => {
         }
     });
 });
-
+//get student with id 
 app.get("/student/:id", (req, res) => {
     let ID = parseInt(req.params.id); // Parse the ID to integer
-    // console.log('Received request for student ID:', ID);
+    
 
     let selectcust = `SELECT * FROM STUDENTS WHERE STUDENT_ID = ?`;
     db.query(selectcust, ID, (err, result) => {
@@ -177,7 +191,7 @@ app.get("/student/:id", (req, res) => {
         res.json(result[0]);
     });
 });
-
+//getting student with course
 app.get('/students/:course',(req,res)=>{
     let course=req.params.course;
     let query = `SELECT * FROM STUDENTS WHERE CLASS=?  `;
@@ -192,6 +206,7 @@ app.get('/students/:course',(req,res)=>{
 
 
 })
+//get student by search query
 app.get('/search', (req, res) => {
     const query = req.query.q.toLowerCase();
     const sql = `SELECT * FROM students WHERE LOWER(FIRST_NAME) LIKE ? OR LOWER(CLASS) LIKE ? OR STUDENT_ID = ?`;
@@ -200,28 +215,26 @@ app.get('/search', (req, res) => {
     db.query(sql, values, (err, results) => {
         if (err) {
             console.error('Error executing query:', err);
-            return res.status(500).json({ error: 'Internal Server Error' });  // Return JSON instead of plain text
-        }
+            return res.status(500).json({ error: 'Internal Server Error' });  
         res.json(results);
-    });
+}});
 });
 
     
-
-//Creating 
+//adding student
 app.post('/add_student', (req, res) => {
     const student = req.body;
     db.query('INSERT INTO STUDENTS SET ?', student, (err, result) => {
         if (err) {
             console.log(err);
-            res.status(500).send({ success: false, message: 'Error adding student' }); // Return JSON object for error
+            res.status(500).send({ success: false, message: 'Error adding student' }); 
         } else {
             res.send({ success: true, generatedId: result.insertId, message: 'Student added successfully' }); // Return JSON object with success status and generated ID
         }
     });
 });
-// update
 
+//edit/update student by id
 app.put('/update_student/:id', (req, res) => { 
     const id = req.params.id; 
     const student = req.body; 
@@ -234,7 +247,7 @@ app.put('/update_student/:id', (req, res) => {
             res.send('Student updated');; 
         } });
 } ) 
-// delete  
+// delete s tudent by id 
 app.delete('/student/:id', (req, res) => {
     const { id } = req.params;
 
@@ -262,151 +275,9 @@ app.delete('/student/:id', (req, res) => {
 
 
 
-// // ATTENDANCE ROUTES
-// app.get('/attendance', (req, res) => {
-//     let attendance = `SELECT * FROM ATTENDANCE`;
-//     db.query(attendance, (err, result) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error fetching attendance records');
-//         } else {
-//             res.json(result);
-//             console.table(result);
-//         }
-//     });
-// });
+//Attendance issue end points 
 
-// app.get('/attendance/:student_id', (req, res) => {
-//     const { student_id } = req.params;
-//     let attendance = `SELECT * FROM ATTENDANCE WHERE STUDENT_ID = ?`;
-//     db.query(attendance, [student_id], (err, result) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error fetching attendance records for the student');
-//         } else {
-//             res.json(result);
-//             console.table(result);
-//         }
-//     });
-// });
-
-// app.post('/attendance', (req, res) => {
-//     const attendance = req.body;
-//     db.query('INSERT INTO ATTENDANCE SET ?', attendance, (err) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error adding attendance record');
-//         } else {
-//             res.send('Attendance record added');
-//         }
-//     });
-// });
-
-// app.put('/attendance/:attendance_id', (req, res) => {
-//     const { attendance_id } = req.params;
-//     const attendance = req.body;
-//     db.query('UPDATE ATTENDANCE SET ? WHERE ATTENDANCE_ID = ?', [attendance, attendance_id], (err) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error updating attendance record');
-//         } else {
-//             res.send('Attendance record updated successfully');
-//         }
-//     });
-// });
-
-// app.delete('/attendance/:attendance_id', (req, res) => {
-//     const { attendance_id } = req.params;
-//     db.query('DELETE FROM ATTENDANCE WHERE ATTENDANCE_ID = ?', [attendance_id], (err) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error deleting attendance record');
-//         } else {
-//             res.send('Attendance record deleted successfully');
-//         }
-//     });
-// });
-
-// // PAYMENT METHODS
-// app.get('/payments', (req, res) => {
-//     let payments = `SELECT * FROM PAYMENT`;
-//     db.query(payments, (err, result) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error fetching payment records');
-//         } else {
-//             res.json(result);
-//             console.table(result);
-//         }
-//     });
-// });
-
-// app.get('/payments/:student_id', (req, res) => {
-//     const { student_id } = req.params;
-//     let payments = `SELECT * FROM PAYMENT WHERE STUDENT_ID = ?`;
-//     db.query(payments, [student_id], (err, result) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error fetching payment records for the student');
-//         } else {
-//             res.json(result);
-//             console.table(result);
-//         }
-//     });
-// });
-
-// app.post('/payments', (req, res) => {
-//     const payment = req.body;
-//     db.query('INSERT INTO PAYMENT SET ?', payment, (err) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error adding payment record');
-//         } else {
-//             res.send('Payment record added');
-//         }
-//     });
-// });
-
-// app.put('/payments/:payment_id', (req, res) => {
-//     const { payment_id } = req.params;
-//     const payment = req.body;
-//     db.query('UPDATE PAYMENT SET ? WHERE PAYMENT_ID = ?', [payment, payment_id], (err) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error updating payment record');
-//         } else {
-//             res.send('Payment record updated successfully');
-//         }
-//     });
-// });
-
-// // Uncommented and fixed deletion route
-// app.delete('/payments/:payment_id', (req, res) => {
-//     const { payment_id } = req.params;
-//     db.query('DELETE FROM PAYMENT WHERE PAYMENT_ID = ?', [payment_id], (err) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).send('Error deleting payment record');
-//         } else {
-//             res.send('Payment record deleted successfully');
-//         }
-//     });
-// });
-
-// // ALTER TABLE QUERY
-// const query = `ALTER TABLE STUDENTS 
-//                     DROP COLUMN AGE` 
-
-// db.query(query, (err, result) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log('Columns removed successfully');
-//     }
-// });
- //geting student
-
-
+//taking attendance
 app.post("/attendance", (req, res) => {
     const { attendanceData } = req.body; // Array of {studentId, status, date}
     
@@ -419,6 +290,8 @@ app.post("/attendance", (req, res) => {
         res.json({ message: "Attendance recorded successfully." });
     });
 });
+
+
 app.get("/studentss/:className", (req, res) => {
     const className = req.params.className;
     
@@ -431,7 +304,7 @@ app.get("/studentss/:className", (req, res) => {
 });
 // Fetch Attendance Data
 
-
+// track attendance by date for specific course students 
 app.get("/attendance/:className/:startDate/:endDate", (req, res) => { 
     let { className, startDate, endDate } = req.params; 
     console.log("Received className from request:", className); 
@@ -465,9 +338,8 @@ app.get("/attendance/:className/:startDate/:endDate", (req, res) => {
     }); 
   });
 
-
-
-  app.get("/generate-report/:className/:startDate/:endDate", async (req, res) => { 
+// get attendance report pdf  by date for specific course students 
+app.get("/generate-report/:className/:startDate/:endDate", async (req, res) => { 
     let { className, startDate, endDate } = req.params; 
     const query = `
       SELECT S.FIRST_NAME, S.GUARDIAN_NAME, A.ATTENDANCE_DATE, A.STATUS 
@@ -524,10 +396,10 @@ app.get("/attendance/:className/:startDate/:endDate", (req, res) => {
         res.status(500).json({ error: 'Failed to generate PDF report.' }); 
       } 
     }); 
-  });
-  
+});
 
-  app.post('/insert-fee', (req, res) => {
+// store fee info
+app.post('/insert-fee', (req, res) => {
     const { studentId, feeAmount, paidDate, status } = req.body;
     const query = 'INSERT INTO Fees (Student_ID, Fee_Amount, Paid_Date, Status) VALUES (?, ?, ?, ?)';
    db.query(query, [studentId, feeAmount, paidDate, status], (err, result) => {
@@ -537,7 +409,7 @@ app.get("/attendance/:className/:startDate/:endDate", (req, res) => {
         res.send('Fee data inserted successfully');
     });
 });
-
+// track fee statuse for specific student
 app.get('/track-fee-status/:studentId', (req, res) => {
     const studentId = req.params.studentId;
     const query = 'SELECT * FROM Fees WHERE Student_ID = ?';
@@ -548,7 +420,7 @@ app.get('/track-fee-status/:studentId', (req, res) => {
         res.send(results);
     });
 });
-
+// get fee receipt 
 app.get('/generate-fee-receipt/:feeId', (req, res) => {
     const feeId = req.params.feeId;
     const query = 'SELECT * FROM Fees WHERE Fee_ID = ?';
@@ -570,6 +442,7 @@ app.get('/generate-fee-receipt/:feeId', (req, res) => {
         res.json(receipt);  // Send the result as JSON
     });
 });
+ //get total number of registered students 
 app.get('/api/total-students', (req, res) => {
     let sql = 'SELECT COUNT(*) AS total_students FROM students';
     db.query(sql, (err, result) => {
@@ -577,7 +450,7 @@ app.get('/api/total-students', (req, res) => {
         res.send(result[0]);
     });
 });
-
+// get attendance percentage
 app.get('/api/attendance-rate', (req, res) => {
     let sql = 'SELECT (SUM(CASE WHEN status="Present" THEN 1 ELSE 0 END) / COUNT(*)) * 100 AS attendance_rate FROM attendance';
     db.query(sql, (err, result) => {
@@ -585,7 +458,7 @@ app.get('/api/attendance-rate', (req, res) => {
         res.send(result[0]);
     });
 });
-
+// get total fee collected 
 app.get('/api/fees-collected', (req, res) => {
     let sql = 'SELECT SUM(fee_amount) AS fees_collected FROM fees WHERE status="Paid"';
     db.query(sql, (err, result) => {
